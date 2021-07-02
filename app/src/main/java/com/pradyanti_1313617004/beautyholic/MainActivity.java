@@ -9,10 +9,8 @@ import android.util.Log;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
-import com.pradyanti_1313617004.beautyholic.Model.ProductModel;
 import com.pradyanti_1313617004.beautyholic.Retrofit.ApiClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

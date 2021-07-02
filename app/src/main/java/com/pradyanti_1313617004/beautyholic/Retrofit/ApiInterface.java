@@ -1,7 +1,6 @@
 package com.pradyanti_1313617004.beautyholic.Retrofit;
 
 import com.pradyanti_1313617004.beautyholic.Model.Product;
-import com.pradyanti_1313617004.beautyholic.Model.ProductModel;
 
 import java.util.List;
 

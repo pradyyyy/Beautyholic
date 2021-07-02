@@ -8,10 +8,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pradyanti_1313617004.beautyholic.Model.Product;
-import com.pradyanti_1313617004.beautyholic.Model.ProductModel;
 import com.pradyanti_1313617004.beautyholic.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListViewHolder> {
