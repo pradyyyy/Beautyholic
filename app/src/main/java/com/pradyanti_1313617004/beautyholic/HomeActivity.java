@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductTypeAdapter;
@@ -35,5 +36,21 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         ProductTypeAdapter productTypeAdapter = new ProductTypeAdapter(list);
         recyclerView.setAdapter(productTypeAdapter);
+
+        //OnClick
+        productTypeAdapter.setOnItemClickCallBack(new ProductTypeAdapter.OnItemClickCallBack() {
+            @Override
+            public void onItemClicked(ProductType productType) {
+                showSelectedItem(productType);
+            }
+        });
+    }
+
+
+    //OnClick method
+    private void showSelectedItem(ProductType productType) {
+        Intent kirimData = new Intent(HomeActivity.this, MainActivity.class);
+        kirimData.putExtra(MainActivity.EXTRA_NAMA, productType.getName());
+        startActivity(kirimData);
     }
 }

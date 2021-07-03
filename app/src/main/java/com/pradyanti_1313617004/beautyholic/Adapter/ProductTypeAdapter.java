@@ -18,6 +18,13 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
 
     private ArrayList<ProductType> productTypeList;
 
+    private OnItemClickCallBack onItemClickCallBack;
+
+
+    public void setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack;
+    }
+
     public ProductTypeAdapter(ArrayList<ProductType> list) {
         this.productTypeList = list;
     }
@@ -37,6 +44,14 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
                 .into(holder.imageButton);
         holder.tvName.setText(productType.getName());
 
+        //OnClick
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickCallBack.onItemClicked(productTypeList.get(holder.getAdapterPosition()));
+            }
+        });
+
     }
 
     @Override
@@ -53,7 +68,11 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
             super(itemView);
 
             imageButton = itemView.findViewById(R.id.imageButton_product_type);
-            tvName = itemView.findViewById(R.id.tvProduct_type);
+            tvName = itemView.findViewById(R.id.tv_Product_type_name);
         }
+    }
+
+    public interface OnItemClickCallBack {
+        void onItemClicked(ProductType productType);
     }
 }

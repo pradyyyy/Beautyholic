@@ -31,23 +31,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
     public void onBindViewHolder(ProductAdapter.ListViewHolder holder, int position) {
         holder.tvBrand.setText(mProductList.get(position).getBrand());
         holder.tvName.setText(mProductList.get(position).getName());
-        holder.tvPrice.setText(Double.toString(mProductList.get(position).getPrice()));
-        holder.tvRating.setText(Double.toString(mProductList.get(position).getRating()));
+        holder.tvCategory.setText(mProductList.get(position).getCategory());
+        holder.tvPrice.setText("$" + Double.toString(mProductList.get(position).getPrice()));
 
-        List<String> taglist = mProductList.get(position).getTagList();
-        String tag_list = "";
 
-        for (int i = 0; i < taglist.size(); i++ ) {
-//            tag_list += taglist.get(i) + ", ";
-
-            if (i == taglist.size() - 1) {
-                tag_list += taglist.get(i);
-            } else {
-                tag_list += taglist.get(i) + ", ";
-            }
-        }
-
-        holder.tvTagList.setText(tag_list);
+//        List<String> taglist = mProductList.get(position).getTagList();
+//        String tag_list = "";
+//
+//        for (int i = 0; i < taglist.size(); i++ ) {
+////            tag_list += taglist.get(i) + ", ";
+//
+//            if (i == taglist.size() - 1) {
+//                tag_list += taglist.get(i);
+//            } else {
+//                tag_list += taglist.get(i) + ", ";
+//            }
+//        }
+//
+//        holder.tvTagList.setText(tag_list);
 
     }
 
@@ -58,16 +59,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvBrand, tvName, tvPrice, tvRating, tvTagList;
+        public TextView tvBrand, tvName, tvCategory, tvPrice;
 
         public ListViewHolder(View itemView) {
             super(itemView);
 
-            tvBrand = itemView.findViewById(R.id.brand);
-            tvName = itemView.findViewById(R.id.name);
-            tvPrice = itemView.findViewById(R.id.price);
-            tvRating = itemView.findViewById(R.id.rating);
-            tvTagList = itemView.findViewById(R.id.tag_list);
+            tvBrand = itemView.findViewById(R.id.tvbrand);
+            tvName = itemView.findViewById(R.id.tvname);
+            tvCategory = itemView.findViewById(R.id.tvCategoryName);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
+//            tvTagList = itemView.findViewById(R.id.tag_list);
         }
     }
 }

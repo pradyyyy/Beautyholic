@@ -1,11 +1,13 @@
 package com.pradyanti_1313617004.beautyholic;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
@@ -24,18 +26,28 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
 
+    public static final String EXTRA_NAMA = "extra_nama";
+
     List<Product> productArrayList;
+    TextView product_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        product_type = findViewById(R.id.tv_product_type);
+
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
         mainActivity = this;
+
+        String product_type_name = getIntent().getStringExtra(EXTRA_NAMA);
+
+        product_type.setText(product_type_name);
 
         getProductFromApi();
 
@@ -57,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
                         productArrayList = response.body();
 
                         mAdapter = new ProductAdapter(productArrayList);
+                        mAdapter.notifyDataSetChanged();
                         recyclerView.setAdapter(mAdapter);
+                        recyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
                     }
 
                     @Override
