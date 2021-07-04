@@ -17,6 +17,9 @@ public class Product {
     @SerializedName("price")
     private double price;
 
+    @SerializedName("image_link")
+    private String image_link;
+
     @SerializedName("description")
     private String description;
 
@@ -58,6 +61,14 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImage_link() {
+        return image_link;
+    }
+
+    public void setImage_link(String image_link) {
+        this.image_link = image_link;
     }
 
     public String getDescription() {

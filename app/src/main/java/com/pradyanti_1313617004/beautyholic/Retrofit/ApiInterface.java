@@ -6,11 +6,12 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @GET("products.json?product_type=blush")
-    Call<List<Product>> getProductData();
+    @GET("products.json?")
+    Call<List<Product>> getProductData(@Query("product_type") String product_type);
 
 
 }

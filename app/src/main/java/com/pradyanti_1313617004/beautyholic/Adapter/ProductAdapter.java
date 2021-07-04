@@ -3,10 +3,12 @@ package com.pradyanti_1313617004.beautyholic.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.R;
 
@@ -33,6 +35,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
         holder.tvName.setText(mProductList.get(position).getName());
         holder.tvCategory.setText(mProductList.get(position).getCategory());
         holder.tvPrice.setText("$" + Double.toString(mProductList.get(position).getPrice()));
+        Glide.with(holder.itemView.getContext())
+                .load(mProductList.get(position).getImage_link())
+                .into(holder.imageButton);
 
 
 //        List<String> taglist = mProductList.get(position).getTagList();
@@ -60,6 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
     public class ListViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvBrand, tvName, tvCategory, tvPrice;
+        public ImageButton imageButton;
 
         public ListViewHolder(View itemView) {
             super(itemView);
@@ -68,6 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
             tvName = itemView.findViewById(R.id.tvname);
             tvCategory = itemView.findViewById(R.id.tvCategoryName);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            imageButton = itemView.findViewById(R.id.imageButton_product);
 //            tvTagList = itemView.findViewById(R.id.tag_list);
         }
     }

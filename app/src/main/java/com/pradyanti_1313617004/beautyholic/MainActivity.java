@@ -26,17 +26,12 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
 
-    public static final String EXTRA_NAMA = "extra_nama";
-
     List<Product> productArrayList;
-    TextView product_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        product_type = findViewById(R.id.tv_product_type);
 
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
@@ -45,16 +40,22 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivity = this;
 
-        String product_type_name = getIntent().getStringExtra(EXTRA_NAMA);
+//        String product_type_name = getIntent().getStringExtra(EXTRA_NAMA);
+//
+//        product_type.setText(product_type_name);
+//
+//        getProductFromApi();
 
-        product_type.setText(product_type_name);
-
-        getProductFromApi();
+        if (getIntent().getExtras() != null) {
+            String product_type = getIntent().getExtras().getString("product_type");
+            this.getSupportActionBar().setTitle(product_type);
+            getProductFromApi(product_type);
+        }
 
     }
 
-    private void getProductFromApi() {
-        ApiClient.apiInterface().getProductData()
+    private void getProductFromApi(String product_type) {
+        ApiClient.apiInterface().getProductData(product_type)
                 .enqueue(new Callback<List<Product>>() {
                     @Override
                     public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<List<Product>> call, Throwable t) {
                         Log.d(TAG, "onFailure: " + t.getMessage());
-
                     }
                 });
     }
