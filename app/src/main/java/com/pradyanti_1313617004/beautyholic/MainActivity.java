@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,7 +23,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ProductAdapter mAdapter;
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
 
@@ -69,10 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
                         productArrayList = response.body();
 
-                        mAdapter = new ProductAdapter(productArrayList);
-                        mAdapter.notifyDataSetChanged();
-                        recyclerView.setAdapter(mAdapter);
-                        recyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                        ProductAdapter productAdapter = new ProductAdapter(productArrayList);
+                        productAdapter.notifyDataSetChanged();
+                        recyclerView.setAdapter(productAdapter);
+                        recyclerView.smoothScrollToPosition(productAdapter.getItemCount() - 1);
+
+                        //onClick
+                        productAdapter.setOnItemClickCallBack(new ProductAdapter.OnItemClickCallBack() {
+                            @Override
+                            public void onItemClicked(Product productData) {
+                                showSelectedProduct(productData);
+                            }
+                        });
+
                     }
 
                     @Override
@@ -80,5 +89,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onFailure: " + t.getMessage());
                     }
                 });
+    }
+
+    private void showSelectedProduct(Product productData) {
+        Intent kirimData = new Intent(MainActivity.this, DetailProductActivity.class);
+        kirimData.putExtra("ProductDataList", productData);
+        startActivity(kirimData);
     }
 }

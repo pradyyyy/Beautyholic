@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.R;
 
@@ -18,8 +19,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
 
     List<Product> mProductList;
 
+    private OnItemClickCallBack onItemClickCallBack;
+
     public ProductAdapter(List<Product> productList) {
         mProductList = productList;
+    }
+
+    public void setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack;
     }
 
     @Override
@@ -35,9 +42,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
         holder.tvName.setText(mProductList.get(position).getName());
         holder.tvCategory.setText(mProductList.get(position).getCategory());
         holder.tvPrice.setText("$" + Double.toString(mProductList.get(position).getPrice()));
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.drawable.error);
+
         Glide.with(holder.itemView.getContext())
                 .load(mProductList.get(position).getImage_link())
+                .apply(options)
                 .into(holder.imageButton);
+
+        //OnClick
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickCallBack.onItemClicked(mProductList.get(holder.getAdapterPosition()));
+            }
+        });
 
 
 //        List<String> taglist = mProductList.get(position).getTagList();
@@ -77,5 +99,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
             imageButton = itemView.findViewById(R.id.imageButton_product);
 //            tvTagList = itemView.findViewById(R.id.tag_list);
         }
+    }
+
+    public interface OnItemClickCallBack {
+        void onItemClicked(Product productData);
     }
 }

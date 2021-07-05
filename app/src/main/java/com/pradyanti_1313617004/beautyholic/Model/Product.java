@@ -1,12 +1,15 @@
 package com.pradyanti_1313617004.beautyholic.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements Parcelable {
 
     @SerializedName("brand")
     private String brand;
@@ -118,4 +121,48 @@ public class Product {
     public void setProduct_colors(ArrayList<ProductColors> product_colors) {
         this.product_colors = product_colors;
     }
+
+    protected Product(Parcel in) {
+        brand = in.readString();
+        name = in.readString();
+        price = in.readDouble();
+        image_link = in.readString();
+        description = in.readString();
+        rating = in.readDouble();
+        category = in.readString();
+        product_type = in.readString();
+        tagList = in.createStringArrayList();
+        product_colors = in.createTypedArrayList(ProductColors.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(brand);
+        dest.writeString(name);
+        dest.writeDouble(price);
+        dest.writeString(image_link);
+        dest.writeString(description);
+        dest.writeDouble(rating);
+        dest.writeString(category);
+        dest.writeString(product_type);
+        dest.writeStringList(tagList);
+        dest.writeTypedList(product_colors);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 }

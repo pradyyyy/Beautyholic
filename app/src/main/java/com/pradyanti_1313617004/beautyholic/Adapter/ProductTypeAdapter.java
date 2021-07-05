@@ -20,7 +20,6 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
 
     private OnItemClickCallBack onItemClickCallBack;
 
-
     public void setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
         this.onItemClickCallBack = onItemClickCallBack;
     }

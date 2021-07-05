@@ -37,7 +37,7 @@
 
     <RelativeLayout
         android:layout_width="401dp"
-        android:layout_height="513dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/cv_detail_product_type"
         android:layout_marginTop="4dp"
         android:orientation="vertical"
