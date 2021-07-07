@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
+import com.pradyanti_1313617004.beautyholic.Model.ProductType;
 import com.pradyanti_1313617004.beautyholic.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListViewHolder> {
@@ -43,14 +45,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
         holder.tvCategory.setText(mProductList.get(position).getCategory());
         holder.tvPrice.setText("$" + Double.toString(mProductList.get(position).getPrice()));
 
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.drawable.error);
-
         Glide.with(holder.itemView.getContext())
                 .load(mProductList.get(position).getImage_link())
-                .apply(options)
+                .placeholder(R.drawable.load)
+                .error(R.drawable.ic_baseline_image_not_supported_24)
                 .into(holder.imageButton);
 
         //OnClick

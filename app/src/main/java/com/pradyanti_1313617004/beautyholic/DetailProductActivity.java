@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductColorsAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.Model.ProductColors;
+import com.pradyanti_1313617004.beautyholic.Model.ProductType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ public class DetailProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_product);
 
+        this.getSupportActionBar().setTitle("Detail Product");
+
         Product product = getIntent().getParcelableExtra("ProductDataList");
 
         tv_detail_brand = findViewById(R.id.tv_detail_brand);
@@ -41,6 +45,7 @@ public class DetailProductActivity extends AppCompatActivity {
         tv_detail_rating = findViewById(R.id.tv_detail_rating);
         tv_detail_description = findViewById(R.id.tv_detail_description);
         tv_detail_tags = findViewById(R.id.tv_detail_taglist);
+        image_detail_product = findViewById(R.id.image_detail_product);
 
         tv_detail_brand.setText(product.getBrand());
         tv_detail_name.setText(product.getName());
@@ -61,24 +66,23 @@ public class DetailProductActivity extends AppCompatActivity {
 
         tv_detail_tags.setText(tag_list);
 
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.drawable.error);
-
-//        Glide.with(DetailProductActivity.this)
-//                .load(product.getImage_link())
-//                .apply(options)
-//                .into(image_detail_product);
+        Glide.with(DetailProductActivity.this)
+                .load(product.getImage_link())
+                .placeholder(R.drawable.load)
+                .error(R.drawable.ic_baseline_image_not_supported_24)
+                .into(image_detail_product);
 
         recyclerView = findViewById(R.id.rv_detail_product);
+        recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         detailProductActivity = this;
 
         ArrayList<ProductColors> productColorsArrayList = product.getProduct_colors();
         productColorsAdapter = new ProductColorsAdapter(productColorsArrayList);
+        productColorsAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(productColorsAdapter);
+//        recyclerView.smoothScrollToPosition(productColorsAdapter.getItemCount() - 1);
 
 
 

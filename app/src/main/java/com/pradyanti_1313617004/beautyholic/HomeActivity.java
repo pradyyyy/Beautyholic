@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     private void showSelectedItem(ProductType productType) {
         Intent kirimData = new Intent(HomeActivity.this, MainActivity.class);
         kirimData.putExtra("product_type", productType.getName());
+        kirimData.putExtra("description_product_type", productType.getDescription());
         startActivity(kirimData);
     }
 }

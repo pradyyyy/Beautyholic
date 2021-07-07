@@ -4,6 +4,7 @@ public class ProductType {
 
     private String name;
     private int photoPoster;
+    private String description;
 
     public String getName() {
         return name;
@@ -19,5 +20,13 @@ public class ProductType {
 
     public void setPhotoPoster(int photoPoster) {
         this.photoPoster = photoPoster;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

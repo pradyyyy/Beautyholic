@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
+    TextView tvDescriptionProduct;
 
     List<Product> productArrayList;
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tvDescriptionProduct = findViewById(R.id.detail_product_type);
 
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             String product_type = getIntent().getExtras().getString("product_type");
+            tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
             this.getSupportActionBar().setTitle(product_type);
             getProductFromApi(product_type);
         }
