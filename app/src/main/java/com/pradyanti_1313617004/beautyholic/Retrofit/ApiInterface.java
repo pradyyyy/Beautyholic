@@ -13,5 +13,4 @@ public interface ApiInterface {
     @GET("products.json?")
     Call<List<Product>> getProductData(@Query("product_type") String product_type);
 
-
 }

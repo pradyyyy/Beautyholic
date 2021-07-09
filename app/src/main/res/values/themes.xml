@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-<!--    <style name="TextAppearance.AppCompat..Widget.ActionBar.Title" parent="@android:style/TextAppearance">-->
-<!--        <item name="android:textColor">@color/black</item>-->
-<!--    </style>-->
+    <style name="RatingBar">
+        <item name="colorControlActivated">@color/pink</item>
+    </style>
 </resources>

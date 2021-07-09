@@ -1,61 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="8dp"
+    android:id="@+id/swipe_refresh"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="visible">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_detail_product_type"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardElevation="8dp"
-            app:cardCornerRadius="16dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_marginTop="4dp"
+            android:background="@color/light_grey">
 
             <LinearLayout
-                android:layout_margin="12dp"
-                android:padding="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/detail_product_type"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/detail_layout"
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Detail Blush" />
+                    android:orientation="vertical"
+                    android:background="@drawable/transparent">
+
+                    <TextView
+                        android:id="@+id/detail_product_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Detail product" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="401dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/cv_detail_product_type"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_product_type"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_product">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+            <!-- eror layout  -->
 
-        <RelativeLayout
-            android:layout_width="401dp"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/cv_detail_product_type"
-            android:layout_marginTop="4dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/cv_detail_product_type"
-            tools:ignore="MissingConstraints">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
+            <LinearLayout
+                android:id="@+id/eror_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_product">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:background="@color/light_grey"
+                android:visibility="gone"
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="250dp"
+                    android:src="@drawable/refresh">
+                </ImageView>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Something went wrong!"
+                    android:textSize="20dp"
+                    android:textColor="@color/navy">
+                </TextView>
 
-</ScrollView>
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Please try to refresh the page"
+                    android:textSize="20dp"
+                    android:textColor="@color/navy">
+                </TextView>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

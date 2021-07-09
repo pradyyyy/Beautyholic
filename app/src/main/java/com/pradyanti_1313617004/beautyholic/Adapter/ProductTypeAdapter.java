@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +15,7 @@ import com.pradyanti_1313617004.beautyholic.R;
 
 import java.util.ArrayList;
 
-public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ListViewHolder> {
+public class    ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ListViewHolder> {
 
     private ArrayList<ProductType> productTypeList;
 
@@ -29,18 +30,18 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
     }
 
     @Override
-    public ProductTypeAdapter.ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product_type, parent, false);
         ListViewHolder listViewHolder = new ListViewHolder(view);
         return listViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ProductTypeAdapter.ListViewHolder holder, int position) {
+    public void onBindViewHolder(ListViewHolder holder, int position) {
         ProductType productType = productTypeList.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(productType.getPhotoPoster())
-                .into(holder.imageButton);
+                .into(holder.imageView);
         holder.tvName.setText(productType.getName());
 
         //OnClick
@@ -50,7 +51,6 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
                 onItemClickCallBack.onItemClicked(productTypeList.get(holder.getAdapterPosition()));
             }
         });
-
     }
 
     @Override
@@ -60,13 +60,13 @@ public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
 
-        ImageButton imageButton;
+        ImageView imageView;
         TextView tvName;
 
         public ListViewHolder(View itemView) {
             super(itemView);
 
-            imageButton = itemView.findViewById(R.id.imageButton_product_type);
+            imageView = itemView.findViewById(R.id.image_product_type);
             tvName = itemView.findViewById(R.id.tv_Product_type_name);
         }
     }

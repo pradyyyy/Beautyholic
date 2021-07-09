@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductAdapter;
@@ -20,12 +23,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
     TextView tvDescriptionProduct;
+    LinearLayout error_layout, detail_layout;
 
     List<Product> productArrayList;
 
@@ -36,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         tvDescriptionProduct = findViewById(R.id.detail_product_type);
 
+        refreshLayout = findViewById(R.id.swipe_refresh);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setRefreshing(true);
+        error_layout = findViewById(R.id.eror_layout);
+        detail_layout = findViewById(R.id.detail_layout);
+
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -43,19 +54,34 @@ public class MainActivity extends AppCompatActivity {
 
         mainActivity = this;
 
+        receivedData();
+
 //        String product_type_name = getIntent().getStringExtra(EXTRA_NAMA);
 //
 //        product_type.setText(product_type_name);
 //
 //        getProductFromApi();
 
+//        if (getIntent().getExtras() != null) {
+//            String product_type = getIntent().getExtras().getString("product_type");
+//            tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
+//            this.getSupportActionBar().setTitle(product_type);
+//            getProductFromApi(product_type);
+//        }
+
+    }
+
+    private void receivedData() {
+        detail_layout.setVisibility(View.GONE);
+
         if (getIntent().getExtras() != null) {
             String product_type = getIntent().getExtras().getString("product_type");
             tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
             this.getSupportActionBar().setTitle(product_type);
+
+            error_layout.setVisibility(View.GONE);
             getProductFromApi(product_type);
         }
-
     }
 
     private void getProductFromApi(String product_type) {
@@ -72,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: Sukses respon " + response.code());
 
                         productArrayList = response.body();
+                        refreshLayout.setRefreshing(false);
+                        detail_layout.setVisibility(View.VISIBLE);
+                        error_layout.setVisibility(View.GONE);
 
                         ProductAdapter productAdapter = new ProductAdapter(productArrayList);
                         productAdapter.notifyDataSetChanged();
@@ -90,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<Product>> call, Throwable t) {
+                        refreshLayout.setRefreshing(false);
                         Log.d(TAG, "onFailure: " + t.getMessage());
+                        error_layout.setVisibility(View.VISIBLE);
                     }
                 });
     }
@@ -99,5 +130,12 @@ public class MainActivity extends AppCompatActivity {
         Intent kirimData = new Intent(MainActivity.this, DetailProductActivity.class);
         kirimData.putExtra("ProductDataList", productData);
         startActivity(kirimData);
+    }
+
+    @Override
+    public void onRefresh() {
+        Log.d(TAG, "onRefresh: Sukses masuk refresh");
+
+        receivedData();
     }
 }

@@ -54,7 +54,6 @@ public class ProductTypeData {
             productType.setDescription(productTypeDetails[position]);
             list.add(productType);
         }
-
         return list;
     }
 }

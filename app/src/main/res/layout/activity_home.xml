@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".HomeActivity"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@color/light_grey">
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product_type"

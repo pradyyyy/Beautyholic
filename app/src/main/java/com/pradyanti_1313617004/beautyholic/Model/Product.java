@@ -27,7 +27,7 @@ public class Product implements Parcelable {
     private String description;
 
     @SerializedName("rating")
-    private double rating;
+    private float rating;
 
     @SerializedName("category")
     private String category;
@@ -82,11 +82,11 @@ public class Product implements Parcelable {
         this.description = description;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -128,7 +128,7 @@ public class Product implements Parcelable {
         price = in.readDouble();
         image_link = in.readString();
         description = in.readString();
-        rating = in.readDouble();
+        rating = in.readFloat();
         category = in.readString();
         product_type = in.readString();
         tagList = in.createStringArrayList();
@@ -142,7 +142,7 @@ public class Product implements Parcelable {
         dest.writeDouble(price);
         dest.writeString(image_link);
         dest.writeString(description);
-        dest.writeDouble(rating);
+        dest.writeFloat(rating);
         dest.writeString(category);
         dest.writeString(product_type);
         dest.writeStringList(tagList);
