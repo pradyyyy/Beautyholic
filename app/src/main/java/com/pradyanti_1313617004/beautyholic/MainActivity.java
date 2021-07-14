@@ -10,8 +10,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
@@ -29,8 +34,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout refreshLayout;
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
-    TextView tvDescriptionProduct;
+    TextView tvDescriptionProduct, title;
     LinearLayout error_layout, detail_layout;
+    ImageView back_button;
 
     List<Product> productArrayList;
 
@@ -39,20 +45,28 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvDescriptionProduct = findViewById(R.id.detail_product_type);
-
         refreshLayout = findViewById(R.id.swipe_refresh);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setRefreshing(true);
+
+        tvDescriptionProduct = findViewById(R.id.detail_product_type);
         error_layout = findViewById(R.id.eror_layout);
         detail_layout = findViewById(R.id.detail_layout);
+        back_button = findViewById(R.id.back_button);
+        title = findViewById(R.id.title);
 
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         mainActivity = this;
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         receivedData();
 
@@ -77,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (getIntent().getExtras() != null) {
             String product_type = getIntent().getExtras().getString("product_type");
             tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
-            this.getSupportActionBar().setTitle(product_type);
+            title.setText(product_type);
 
             error_layout.setVisibility(View.GONE);
             getProductFromApi(product_type);
@@ -103,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         error_layout.setVisibility(View.GONE);
 
                         ProductAdapter productAdapter = new ProductAdapter(productArrayList);
-                        productAdapter.notifyDataSetChanged();
                         recyclerView.setAdapter(productAdapter);
+                        productAdapter.notifyDataSetChanged();
                         recyclerView.smoothScrollToPosition(productAdapter.getItemCount() - 1);
 
                         //onClick
@@ -135,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         Log.d(TAG, "onRefresh: Sukses masuk refresh");
-
         receivedData();
     }
 }

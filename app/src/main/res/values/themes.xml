@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Beautyholic" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Beautyholic" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -15,6 +16,6 @@
     </style>
 
     <style name="RatingBar">
-        <item name="colorControlActivated">@color/pink</item>
+        <item name="colorControlActivated">@color/hot_pink</item>
     </style>
 </resources>

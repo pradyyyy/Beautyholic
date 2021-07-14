@@ -1,12 +1,14 @@
 package com.pradyanti_1313617004.beautyholic;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductTypeAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.ProductType;
@@ -17,15 +19,20 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    TextView title;
     private ArrayList<ProductType> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         recyclerView = findViewById(R.id.rv_product_type);
         recyclerView.setHasFixedSize(true);
+
+        title = findViewById(R.id.title);
+        title.setText("Beautyholic");
 
         list.addAll(ProductTypeData.getListData());
         showRecyclerList();

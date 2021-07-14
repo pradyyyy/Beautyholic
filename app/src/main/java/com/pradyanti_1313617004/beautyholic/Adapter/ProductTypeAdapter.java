@@ -15,7 +15,7 @@ import com.pradyanti_1313617004.beautyholic.R;
 
 import java.util.ArrayList;
 
-public class    ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ListViewHolder> {
+public class ProductTypeAdapter extends RecyclerView.Adapter<ProductTypeAdapter.ListViewHolder> {
 
     private ArrayList<ProductType> productTypeList;
 

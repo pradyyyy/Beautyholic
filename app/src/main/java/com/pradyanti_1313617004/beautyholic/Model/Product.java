@@ -20,6 +20,9 @@ public class Product implements Parcelable {
     @SerializedName("price")
     private double price;
 
+    @SerializedName("price_sign")
+    private String price_sign;
+
     @SerializedName("image_link")
     private String image_link;
 
@@ -64,6 +67,14 @@ public class Product implements Parcelable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPrice_sign() {
+        return price_sign;
+    }
+
+    public void setPrice_sign(String price_sign) {
+        this.price_sign = price_sign;
     }
 
     public String getImage_link() {

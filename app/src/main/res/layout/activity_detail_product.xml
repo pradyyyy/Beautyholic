@@ -1,187 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".DetailProductActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_toolbar_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/image_detail_product"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_round"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_product"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/image_detail_product">
-
-            <View
-                android:id="@+id/view_top"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/tv_detail_brand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Brand"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_top"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/tv_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Name"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_brand" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Price : "
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
-
-            <TextView
-                android:id="@+id/tv_detail_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="40dp"
-                android:text="Price"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
-
-            <RatingBar
-                android:id="@+id/ratingBar_detail_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:rating="3.5"
-                android:theme="@style/RatingBar"
-                style="@style/Widget.AppCompat.RatingBar.Small"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_price" />
-
-            <TextView
-                android:id="@+id/tv_detail_rating"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="88dp"
-                android:text="3.0"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_price" />
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Description : "
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar_detail_product" />
-
-            <TextView
-                android:id="@+id/tv_detail_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="80dp"
-                android:text="Description"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar_detail_product" />
-
-            <TextView
-                android:id="@+id/tv_taglist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tags : "
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_description" />
-
-            <TextView
-                android:id="@+id/tv_detail_taglist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="40dp"
-                android:text="Tag"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_description" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_taglist"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/layout_product"
+            android:layout_height="?android:actionBarSize"
+            android:background="@color/pink"
+            android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
             tools:ignore="MissingConstraints">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_detail_product_color"
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/ic_back_button"
+                android:padding="4dp"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_product_color">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginLeft="32dp"
+                android:text="Product Type"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:ignore="MissingConstraints" />
 
-        </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/layout_toolbar_detail"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/image_detail_product"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher_round"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/image_detail_product">
+
+                <View
+                    android:id="@+id/view_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?android:attr/listDivider"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_detail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Name"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_top"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/tv_detail_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Category"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
+
+                <TextView
+                    android:id="@+id/tv_detail_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Price"
+                    android:textColor="@color/pink"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_category" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar_detail_product"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:rating="3.5"
+                    android:theme="@style/RatingBar"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_price" />
+
+                <TextView
+                    android:id="@+id/tv_detail_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="88dp"
+                    android:layout_marginTop="8dp"
+                    android:text="3.0"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detail_price" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Desc : "
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar_detail_product" />
+
+                <TextView
+                    android:id="@+id/tv_detail_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Description"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar_detail_product" />
+
+                <TextView
+                    android:id="@+id/tv_taglist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Tags : "
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_description" />
+
+                <TextView
+                    android:id="@+id/tv_detail_taglist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Tag"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_description" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_detail_taglist" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/layout_product"
+                tools:ignore="MissingConstraints">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_detail_product_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_product_color"></androidx.recyclerview.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</LinearLayout>

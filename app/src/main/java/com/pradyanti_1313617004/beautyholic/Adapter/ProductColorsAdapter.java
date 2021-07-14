@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +32,10 @@ public class ProductColorsAdapter extends RecyclerView.Adapter<ProductColorsAdap
     @Override
     public void onBindViewHolder(ProductColorsAdapter.ListViewHolder holder, int position) {
         String circle_color = mProductColorsArrayList.get(position).getHex_value();
-        int circleColor = Color.parseColor(circle_color);
-        holder.tvCircleColors.setBackgroundColor(circleColor);
+        String[] colors = circle_color.split(",");
+        String color = colors[0];
+        int circleColor = Color.parseColor(color);
+        holder.circleColors.setBackgroundColor(circleColor);
 
         holder.tvColorName.setText(mProductColorsArrayList.get(position).getColour_name());
 
@@ -45,12 +48,12 @@ public class ProductColorsAdapter extends RecyclerView.Adapter<ProductColorsAdap
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCircleColors, tvColorName;
+        TextView tvColorName, circleColors;;
 
         public ListViewHolder(View itemView) {
             super(itemView);
 
-            tvCircleColors = itemView.findViewById(R.id.circle_colors);
+            circleColors = itemView.findViewById(R.id.circle_colors);
             tvColorName = itemView.findViewById(R.id.tv_color_name);
         }
     }

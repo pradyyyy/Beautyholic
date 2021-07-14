@@ -5,34 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="4dp"
     tools:context=".HomeActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="224dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="300dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp"
-        app:contentPadding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="@color/white">
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tvbrand"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/pink"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="Brand"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="top"
+            android:layout_marginTop="40dp"
+            android:padding="12dp">
 
-            <ImageButton
-                android:id="@+id/imageButton_product"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <ImageView
+                android:id="@+id/imageView_product"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,48 +54,59 @@
                 app:srcCompat="@mipmap/ic_launcher_round" />
 
             <TextView
-                android:id="@+id/tvbrand"
+                android:id="@+id/tvname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Brand"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton_product" />
-
-            <TextView
-                android:id="@+id/tvname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="20dp"
                 android:text="Name"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvbrand" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView_product" />
+
+            <TextView
+                android:id="@+id/tvCategoryProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvname" />
 
             <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
                 android:text="Price"
+                android:textColor="@color/pink"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvname" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoryProduct" />
 
             <RatingBar
                 android:id="@+id/ratingBar_product"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:rating="3.5"
                 android:theme="@style/RatingBar"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPrice"
                 tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="88dp"
+                android:text="3.0"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
