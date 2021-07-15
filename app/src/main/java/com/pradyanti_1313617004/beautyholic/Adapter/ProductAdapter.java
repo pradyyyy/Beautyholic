@@ -1,10 +1,8 @@
 package com.pradyanti_1313617004.beautyholic.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.R;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -40,10 +40,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
         return listViewHolder;
     }
 
+    public String convertStringName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return WordUtils.capitalize(name);
+    }
+
     @Override
     public void onBindViewHolder(ProductAdapter.ListViewHolder holder, int position) {
-        String name_product = mProductList.get(position).getName();
-        String update_name = name_product.trim();
+        String name_product = mProductList.get(position).getName().toLowerCase();
+        String update_name = convertStringName(name_product).trim();
         holder.tvName.setText(update_name);
 
         String brand = mProductList.get(position).getBrand();

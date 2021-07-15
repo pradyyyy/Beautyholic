@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,8 +36,13 @@ public class ProductColorsAdapter extends RecyclerView.Adapter<ProductColorsAdap
         int circleColor = Color.parseColor(color);
         holder.circleColors.setBackgroundColor(circleColor);
 
-        holder.tvColorName.setText(mProductColorsArrayList.get(position).getColour_name());
-
+        String colour_name = mProductColorsArrayList.get(position).getColour_name();
+        if (colour_name == null) {
+            colour_name = "N/A";
+        } else if (colour_name.equals("")) {
+            colour_name = "N/A";
+        }
+        holder.tvColorName.setText(colour_name);
     }
 
     @Override

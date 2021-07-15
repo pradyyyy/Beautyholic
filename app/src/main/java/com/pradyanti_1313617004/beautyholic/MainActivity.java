@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                         ProductAdapter productAdapter = new ProductAdapter(productArrayList);
                         recyclerView.setAdapter(productAdapter);
-                        productAdapter.notifyDataSetChanged();
-                        recyclerView.smoothScrollToPosition(productAdapter.getItemCount() - 1);
+                        //productAdapter.notifyDataSetChanged();
+                        //recyclerView.smoothScrollToPosition(productAdapter.getItemCount() - 1);
 
                         //onClick
                         productAdapter.setOnItemClickCallBack(new ProductAdapter.OnItemClickCallBack() {

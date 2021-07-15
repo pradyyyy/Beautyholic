@@ -5,20 +5,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductColorsAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.Model.ProductColors;
-import com.pradyanti_1313617004.beautyholic.Model.ProductType;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -60,8 +59,8 @@ public class DetailProductActivity extends AppCompatActivity {
             }
         });
 
-        String name_product = product.getName();
-        String update_name = name_product.trim();
+        String name_product = product.getName().toLowerCase();
+        String update_name = convertStringName(name_product).trim();
         tv_detail_name.setText(update_name);
 
         String brand = product.getBrand();
@@ -73,7 +72,6 @@ public class DetailProductActivity extends AppCompatActivity {
         title.setText(brand);
 
         String category = product.getCategory();
-        Log.d(TAG, "onCreate: Category " + category);
         if (category == null) {
             category = "-";
         } else if (category.equals("")) {
@@ -103,7 +101,8 @@ public class DetailProductActivity extends AppCompatActivity {
         } else if (description.equals("")) {
             description = "-";
         } else {
-            description = description.trim().replaceAll("\\s{2,}", " ");
+            //description = description.replaceAll("\\s{2,}", " ");
+            description = String.valueOf(Html.fromHtml(description)).replace("\n", "");
         }
         tv_detail_description.setText(description);
 
@@ -144,5 +143,12 @@ public class DetailProductActivity extends AppCompatActivity {
         productColorsAdapter.notifyDataSetChanged();
         recyclerView.smoothScrollToPosition(productColorsAdapter.getItemCount());
         recyclerView.setAdapter(productColorsAdapter);
+    }
+
+    public String convertStringName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return WordUtils.capitalize(name);
     }
 }
