@@ -10,7 +10,7 @@ Beautyholic adalah sebuah aplikasi dimana pengguna dapat melihat informasi tenta
 
 ## Advanced Topic 
 
-Advanced topic yang diimplementasikan adalah rest api untuk mengambil data informasi makeup.
+Advanced topic yang diimplementasikan adalah rest api untuk mengambil data informasi makeup yang diambil dari http://makeup-api.herokuapp.com/
 
 
 ## Link Play Store Internal Testing  
