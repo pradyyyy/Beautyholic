@@ -33,16 +33,18 @@ public class ProductColorsAdapter extends RecyclerView.Adapter<ProductColorsAdap
         String circle_color = mProductColorsArrayList.get(position).getHex_value();
         String[] colors = circle_color.split(",");
         String color = colors[0];
-        int circleColor = Color.parseColor(color);
-        holder.circleColors.setBackgroundColor(circleColor);
+        if (color.substring(0,1).equals("#")) {
+            int circleColor = Color.parseColor(color);
+            holder.circleColors.setBackgroundColor(circleColor);
 
-        String colour_name = mProductColorsArrayList.get(position).getColour_name();
-        if (colour_name == null) {
-            colour_name = "N/A";
-        } else if (colour_name.equals("")) {
-            colour_name = "N/A";
+            String colour_name = mProductColorsArrayList.get(position).getColour_name();
+            if (colour_name == null) {
+                colour_name = "N/A";
+            } else if (colour_name.equals("")) {
+                colour_name = "N/A";
+            }
+            holder.tvColorName.setText(colour_name);
         }
-        holder.tvColorName.setText(colour_name);
     }
 
     @Override

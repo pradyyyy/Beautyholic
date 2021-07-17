@@ -1,5 +1,7 @@
 package com.pradyanti_1313617004.beautyholic;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,13 +22,15 @@ import com.pradyanti_1313617004.beautyholic.Model.ProductColors;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailProductActivity extends AppCompatActivity {
 
-    TextView tv_detail_name, tv_detail_price, tv_detail_rating, tv_detail_description, tv_detail_tags, tv_detail_category, title;
-    ImageView image_detail_product, back_button;;
+    TextView tv_detail_name, tv_detail_price, tv_detail_rating, tv_detail_description, tv_detail_tags, tv_detail_category;
+    ImageView image_detail_product;
     RatingBar ratingBarProduct;
     private RecyclerView recyclerView;
     private ProductColorsAdapter productColorsAdapter;
@@ -40,9 +44,6 @@ public class DetailProductActivity extends AppCompatActivity {
 
         Product product = getIntent().getParcelableExtra("ProductDataList");
 
-        title = findViewById(R.id.title);
-        back_button = findViewById(R.id.back_button);
-
         tv_detail_category = findViewById(R.id.tv_detail_category);
         tv_detail_name = findViewById(R.id.tv_detail_name);
         tv_detail_price = findViewById(R.id.tv_detail_price);
@@ -52,25 +53,24 @@ public class DetailProductActivity extends AppCompatActivity {
         tv_detail_tags = findViewById(R.id.tv_detail_taglist);
         image_detail_product = findViewById(R.id.image_detail_product);
 
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
+        //name product
         String name_product = product.getName().toLowerCase();
         String update_name = convertStringName(name_product).trim();
         tv_detail_name.setText(update_name);
 
+        //brand
         String brand = product.getBrand();
         if (brand != null ) {
             brand = brand.toUpperCase();
         } else {
             brand = "N/A";
         }
-        title.setText(brand);
+        actionBar.setTitle(brand);
 
+        //category
         String category = product.getCategory();
         if (category == null) {
             category = "-";
@@ -82,30 +82,59 @@ public class DetailProductActivity extends AppCompatActivity {
         }
         tv_detail_category.setText(category);
 
-        String price_sign = product.getPrice_sign();
-        if (price_sign == null) {
-            price_sign = "$";
-        }
-        tv_detail_price.setText(price_sign + Double.toString(product.getPrice()));
+        //price
+        String currency = product.getCurrency();
+        String price = "";
+        double price_fromApi = product.getPrice();
 
+        //convert currency
+        Locale myIndonesianLocale = new Locale("in", "ID");
+        NumberFormat kursIndonesia = NumberFormat.getCurrencyInstance(myIndonesianLocale);
+
+        int pembulatan = 0;
+
+        if (price_fromApi == 0) {
+            price = "Estimated price is not available";
+        } else if (currency == null) {
+            price_fromApi = price_fromApi * 14491;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan) + " (Just an estimate price)";
+        } else if (currency.equals("USD")) {
+            price_fromApi = price_fromApi * 14491;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan) + " (Just an estimate price)";
+        } else if (currency.equals("GBP")) {
+            price_fromApi = price_fromApi * 20019;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan) + " (Just an estimate price)";
+        } else if (currency.equals("CAD")) {
+            price_fromApi = price_fromApi * 11518;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan) + " (Just an estimate price)";
+        }
+        tv_detail_price.setText(price);
+
+        //rating
         float rating = product.getRating();
         DecimalFormat df = new DecimalFormat("#.##");
         String update_rating = df.format(rating);
         tv_detail_rating.setText("(" + update_rating + ")");
 
+        //rating bar
         ratingBarProduct.setRating(product.getRating());
 
+        //description
         String description = product.getDescription();
         if (description == null) {
             description = "-";
         } else if (description.equals("")) {
             description = "-";
         } else {
-            //description = description.replaceAll("\\s{2,}", " ");
             description = String.valueOf(Html.fromHtml(description)).replace("\n", "");
         }
         tv_detail_description.setText(description);
 
+        //taglist
         List<String> taglist = product.getTagList();
         String update_taglist = "";
         if (taglist.size() != 0) {
@@ -113,16 +142,6 @@ public class DetailProductActivity extends AppCompatActivity {
         } else {
             update_taglist = "-";
         }
-//        String update_taglist = "";
-//        for (int i = 0; i < taglist.size(); i++) {
-//            if ( i == taglist.size() - 1) {
-//                update_taglist += taglist.get(i);
-//            }
-//            else {
-//                update_taglist += taglist.get(i) + ", ";
-//            }
-//        }
-
         tv_detail_tags.setText(update_taglist);
 
         Glide.with(DetailProductActivity.this)
@@ -145,10 +164,22 @@ public class DetailProductActivity extends AppCompatActivity {
         recyclerView.setAdapter(productColorsAdapter);
     }
 
+    //convert name produk kapital
     public String convertStringName(String name) {
         if (name == null || name.isEmpty()) {
             return name;
         }
         return WordUtils.capitalize(name);
+    }
+
+    //back button
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

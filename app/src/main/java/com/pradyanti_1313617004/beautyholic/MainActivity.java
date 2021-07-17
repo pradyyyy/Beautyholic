@@ -1,27 +1,29 @@
 package com.pradyanti_1313617004.beautyholic;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.pradyanti_1313617004.beautyholic.Adapter.ProductAdapter;
 import com.pradyanti_1313617004.beautyholic.Model.Product;
 import com.pradyanti_1313617004.beautyholic.Retrofit.ApiClient;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,11 +36,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout refreshLayout;
     public static MainActivity mainActivity;
     private static final String TAG = "MainActivity";
-    TextView tvDescriptionProduct, title;
+    TextView tvDescriptionProduct;
     LinearLayout error_layout, detail_layout;
-    ImageView back_button;
+    private ProductAdapter productAdapter;
 
-    List<Product> productArrayList;
+    List<Product> productArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,37 +54,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         tvDescriptionProduct = findViewById(R.id.detail_product_type);
         error_layout = findViewById(R.id.eror_layout);
         detail_layout = findViewById(R.id.detail_layout);
-        back_button = findViewById(R.id.back_button);
-        title = findViewById(R.id.title);
 
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
+        productAdapter = new ProductAdapter(productArrayList);
+        recyclerView.setAdapter(productAdapter);
+
         mainActivity = this;
-
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         receivedData();
-
-//        String product_type_name = getIntent().getStringExtra(EXTRA_NAMA);
-//
-//        product_type.setText(product_type_name);
-//
-//        getProductFromApi();
-
-//        if (getIntent().getExtras() != null) {
-//            String product_type = getIntent().getExtras().getString("product_type");
-//            tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
-//            this.getSupportActionBar().setTitle(product_type);
-//            getProductFromApi(product_type);
-//        }
-
     }
 
     private void receivedData() {
@@ -91,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (getIntent().getExtras() != null) {
             String product_type = getIntent().getExtras().getString("product_type");
             tvDescriptionProduct.setText(getIntent().getExtras().getString("description_product_type"));
-            title.setText(product_type);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle(product_type);
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
             error_layout.setVisibility(View.GONE);
             getProductFromApi(product_type);
@@ -116,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         detail_layout.setVisibility(View.VISIBLE);
                         error_layout.setVisibility(View.GONE);
 
-                        ProductAdapter productAdapter = new ProductAdapter(productArrayList);
+                        productAdapter = new ProductAdapter(productArrayList);
+                        productAdapter.notifyDataSetChanged();
                         recyclerView.setAdapter(productAdapter);
-                        //productAdapter.notifyDataSetChanged();
                         //recyclerView.smoothScrollToPosition(productAdapter.getItemCount() - 1);
 
                         //onClick
@@ -150,5 +133,48 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onRefresh() {
         Log.d(TAG, "onRefresh: Sukses masuk refresh");
         receivedData();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            case R.id.action_sort_brand:
+                Collections.sort(productArrayList, Product.brandComparator);;
+                productAdapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_sort_category:
+                Collections.sort(productArrayList, Product.categoryCamparator);
+                productAdapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_sort_price_low:
+                Collections.sort(productArrayList, Product.priceLowtoHighComparator);
+                productAdapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_sort_price_high:
+                Collections.sort(productArrayList, Product.priceHightoLowComparator);
+                productAdapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.action_sort_rating:
+                Collections.sort(productArrayList, Product.ratingComparator);
+                productAdapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

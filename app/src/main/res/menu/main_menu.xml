@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_sort_brand"
+        android:title="Sort by Brand">
+    </item>
+
+    <item
+        android:id="@+id/action_sort_category"
+        android:title="Sort by Category">
+    </item>
+
+    <item
+        android:id="@+id/action_sort_price_low"
+        android:title="Sort by Price Low to High">
+    </item>
+
+    <item
+        android:id="@+id/action_sort_price_high"
+        android:title="Sort by Price High to Low">
+    </item>
+
+    <item
+        android:id="@+id/action_sort_rating"
+        android:title="Sort by Review">
+    </item>
+
+</menu>

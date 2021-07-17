@@ -1,8 +1,12 @@
 package com.pradyanti_1313617004.beautyholic.Adapter;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,7 +20,11 @@ import com.pradyanti_1313617004.beautyholic.R;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListViewHolder> {
 
@@ -26,7 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
     private OnItemClickCallBack onItemClickCallBack;
 
     public ProductAdapter(List<Product> productList) {
-        mProductList = productList;
+        this.mProductList = productList;
     }
 
     public void setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
@@ -79,11 +87,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
 
         holder.ratingBarproduct.setRating(mProductList.get(position).getRating());
 
-        String price_sign = mProductList.get(position).getPrice_sign();
-        if (price_sign == null) {
-            price_sign = "$";
+        String currency = mProductList.get(position).getCurrency();
+        String price = "";
+        double price_fromApi = mProductList.get(position).getPrice();
+
+        Locale myIndonesianLocale = new Locale("in", "ID");
+        NumberFormat kursIndonesia = NumberFormat.getCurrencyInstance(myIndonesianLocale);
+
+        int pembulatan = 0;
+
+        if (price_fromApi == 0) {
+            price = "Estimated price is not available";
+        } else if (currency == null) {
+            price_fromApi = price_fromApi * 14491;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan);
+        } else if (currency.equals("USD")) {
+            price_fromApi = price_fromApi * 14491;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan);
+        } else if (currency.equals("GBP")) {
+            price_fromApi = price_fromApi * 20019;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan);
+        } else if (currency.equals("CAD")) {
+            price_fromApi = price_fromApi * 11518;
+            pembulatan = (int)Math.ceil(price_fromApi);
+            price = kursIndonesia.format(pembulatan);
         }
-        holder.tvPrice.setText(price_sign  + Double.toString(mProductList.get(position).getPrice()));
+        holder.tvPrice.setText(price);
 
         Glide.with(holder.itemView.getContext())
                 .load(mProductList.get(position).getImage_link())
@@ -97,22 +129,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
                 onItemClickCallBack.onItemClicked(mProductList.get(holder.getAdapterPosition()));
             }
         });
-
-//        List<String> taglist = mProductList.get(position).getTagList();
-//        String tag_list = "";
-//
-//        for (int i = 0; i < taglist.size(); i++ ) {
-////            tag_list += taglist.get(i) + ", ";
-//
-//            if (i == taglist.size() - 1) {
-//                tag_list += taglist.get(i);
-//            } else {
-//                tag_list += taglist.get(i) + ", ";
-//            }
-//        }
-//
-//        holder.tvTagList.setText(tag_list);
-
     }
 
     @Override
@@ -136,7 +152,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ListView
             tvRating = itemView.findViewById(R.id.tv_rating);
             imageView = itemView.findViewById(R.id.imageView_product);
             ratingBarproduct = itemView.findViewById(R.id.ratingBar_product);
-//            tvTagList = itemView.findViewById(R.id.tag_list);
         }
     }
 
