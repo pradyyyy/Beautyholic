@@ -7,6 +7,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Product implements Parcelable {
@@ -20,8 +22,8 @@ public class Product implements Parcelable {
     @SerializedName("price")
     private double price;
 
-    @SerializedName("price_sign")
-    private String price_sign;
+    @SerializedName("currency")
+    private String currency;
 
     @SerializedName("image_link")
     private String image_link;
@@ -69,12 +71,12 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public String getPrice_sign() {
-        return price_sign;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setPrice_sign(String price_sign) {
-        this.price_sign = price_sign;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getImage_link() {
@@ -133,17 +135,23 @@ public class Product implements Parcelable {
         this.product_colors = product_colors;
     }
 
-    protected Product(Parcel in) {
-        brand = in.readString();
-        name = in.readString();
-        price = in.readDouble();
-        image_link = in.readString();
-        description = in.readString();
-        rating = in.readFloat();
-        category = in.readString();
-        product_type = in.readString();
-        tagList = in.createStringArrayList();
-        product_colors = in.createTypedArrayList(ProductColors.CREATOR);
+    public Product(String brand, String name, double price, String currency, String image_link, String description, float rating, String category, String product_type, List<String> tagList, ArrayList<ProductColors> product_colors) {
+        this.brand = brand;
+        this.name = name;
+        this.price = price;
+        this.currency = currency;
+        this.image_link = image_link;
+        this.description = description;
+        this.rating = rating;
+        this.category = category;
+        this.product_type = product_type;
+        this.tagList = tagList;
+        this.product_colors = product_colors;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -151,6 +159,7 @@ public class Product implements Parcelable {
         dest.writeString(brand);
         dest.writeString(name);
         dest.writeDouble(price);
+        dest.writeString(currency);
         dest.writeString(image_link);
         dest.writeString(description);
         dest.writeFloat(rating);
@@ -160,9 +169,18 @@ public class Product implements Parcelable {
         dest.writeTypedList(product_colors);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    protected Product(Parcel in) {
+        brand = in.readString();
+        name = in.readString();
+        price = in.readDouble();
+        currency = in.readString();
+        image_link = in.readString();
+        description = in.readString();
+        rating = in.readFloat();
+        category = in.readString();
+        product_type = in.readString();
+        tagList = in.createStringArrayList();
+        product_colors = in.createTypedArrayList(ProductColors.CREATOR);
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -174,6 +192,41 @@ public class Product implements Parcelable {
         @Override
         public Product[] newArray(int size) {
             return new Product[size];
+        }
+    };
+
+    public static Comparator<Product> brandComparator = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return String.valueOf(o1.getBrand()).compareTo(String.valueOf(o2.getBrand()));
+        }
+    };
+
+    public static Comparator<Product> categoryCamparator = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return String.valueOf(o1.getCategory()).compareTo(String.valueOf(o2.getCategory()));
+        }
+    };
+
+    public static Comparator<Product> priceLowtoHighComparator = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return Double.compare(o1.getPrice(), o2.getPrice());
+        }
+    };
+
+    public static Comparator<Product> priceHightoLowComparator = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return Double.compare(o2.getPrice(), o1.getPrice());
+        }
+    };
+
+    public static Comparator<Product> ratingComparator = new Comparator<Product>() {
+        @Override
+        public int compare(Product o1, Product o2) {
+            return Double.compare(o2.getRating(), o1.getRating());
         }
     };
 }
